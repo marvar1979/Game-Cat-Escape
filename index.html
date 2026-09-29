@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#161529" />
+  <meta name="description" content="Cat Escape: un juego web 2D de plataformas protagonizado por un gato aventurero." />
+  <title>Cat Escape · Web Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <main class="app-shell">
+    <section id="homeScreen" class="screen screen--active home-screen">
+      <div class="home-card glass">
+        <div class="brand-lockup">
+          <div class="brand-cat" aria-hidden="true">
+            <span class="brand-ear brand-ear--left"></span>
+            <span class="brand-ear brand-ear--right"></span>
+            <span class="brand-face">
+              <i class="eye eye--left"></i>
+              <i class="eye eye--right"></i>
+              <i class="nose"></i>
+            </span>
+          </div>
+          <div>
+            <p class="eyebrow">A tiny adventure</p>
+            <h1>CAT <span>ESCAPE</span></h1>
+            <p class="subtitle">Escapa de casa, cruza el jardín y conquista la ciudad.</p>
+          </div>
+        </div>
+
+        <div class="home-visual">
+          <div class="moon"></div>
+          <div class="city-silhouette city-back"></div>
+          <div class="city-silhouette city-front"></div>
+          <div class="hero-cat" aria-hidden="true">
+            <span class="tail"></span>
+            <span class="body"></span>
+            <span class="head">
+              <i class="ear left"></i><i class="ear right"></i>
+              <i class="hero-eye left"></i><i class="hero-eye right"></i>
+              <i class="hero-nose"></i>
+            </span>
+          </div>
+          <div class="fish fish-a">🐟</div>
+          <div class="fish fish-b">🐟</div>
+        </div>
+
+        <div class="home-actions">
+          <button id="playBtn" class="btn btn-primary">
+            <span class="btn-icon">▶</span>
+            Jugar
+          </button>
+          <button id="levelsBtn" class="btn btn-secondary">
+            <span class="btn-icon">▦</span>
+            Niveles
+          </button>
+        </div>
+
+        <div class="home-meta">
+          <span>15 niveles</span>
+          <span>3 mundos</span>
+          <span>Guardado automático</span>
+        </div>
+      </div>
+
+      <footer class="home-footer">HTML · CSS · JavaScript · JSON</footer>
+    </section>
+
+    <section id="levelsScreen" class="screen">
+      <div class="panel glass">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Selecciona tu aventura</p>
+            <h2>Niveles</h2>
+          </div>
+          <button class="icon-btn" data-action="home" aria-label="Volver al inicio">✕</button>
+        </div>
+        <div id="worldTabs" class="world-tabs"></div>
+        <div id="levelGrid" class="level-grid"></div>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <div class="game-frame">
+        <div class="hud glass">
+          <div class="hud-block hud-brand">
+            <button id="menuBtn" class="icon-btn icon-btn--small" aria-label="Menú">☰</button>
+            <div>
+              <span id="hudWorld" class="hud-kicker">Mundo 1</span>
+              <strong id="hudLevelName">Dormitorio</strong>
+            </div>
+          </div>
+
+          <div class="hud-block hud-stats">
+            <div class="hud-stat">
+              <span>🐟</span>
+              <strong id="fishCounter">0/0</strong>
+            </div>
+            <div class="hud-stat">
+              <span>⏱</span>
+              <strong id="timeCounter">00:00</strong>
+            </div>
+            <div class="hud-stat">
+              <span>💗</span>
+              <strong id="deathCounter">0</strong>
+            </div>
+          </div>
+
+          <div class="hud-block hud-actions">
+            <button id="soundBtn" class="icon-btn icon-btn--small" aria-label="Activar o desactivar sonido">🔊</button>
+            <button id="restartBtn" class="icon-btn icon-btn--small" aria-label="Reiniciar nivel">↻</button>
+          </div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="1280" height="720" aria-label="Cat Escape"></canvas>
+          <div id="toast" class="toast"></div>
+
+          <div class="mobile-controls" aria-hidden="true">
+            <div class="mobile-left">
+              <button class="touch-btn" data-touch="left">◀</button>
+              <button class="touch-btn" data-touch="right">▶</button>
+            </div>
+            <div class="mobile-right">
+              <button class="touch-btn touch-btn--jump" data-touch="jump">↑</button>
+              <button class="touch-btn touch-btn--interact" data-touch="interact">E</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pauseOverlay" class="overlay">
+        <div class="modal glass">
+          <p class="eyebrow">Pausa</p>
+          <h2>¿Un descanso, michi?</h2>
+          <div class="modal-actions">
+            <button id="resumeBtn" class="btn btn-primary">Continuar</button>
+            <button id="pauseRestartBtn" class="btn btn-secondary">Reiniciar nivel</button>
+            <button id="pauseLevelsBtn" class="btn btn-ghost">Ver niveles</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="completeOverlay" class="overlay">
+        <div class="modal modal-complete glass">
+          <div class="result-badge">✓</div>
+          <p class="eyebrow">Nivel completado</p>
+          <h2 id="completeTitle">¡Buen trabajo!</h2>
+          <div id="starsResult" class="stars-result">☆☆☆</div>
+          <div class="result-grid">
+            <div><span>Tiempo</span><strong id="resultTime">00:00</strong></div>
+            <div><span>Pescados</span><strong id="resultFish">0/0</strong></div>
+            <div><span>Caídas</span><strong id="resultDeaths">0</strong></div>
+          </div>
+          <p id="resultTip" class="result-tip">Atrapa todos los pescados para conseguir más estrellas.</p>
+          <div class="modal-actions modal-actions--row">
+            <button id="completeRetryBtn" class="btn btn-secondary">Repetir</button>
+            <button id="nextLevelBtn" class="btn btn-primary">Siguiente nivel</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
